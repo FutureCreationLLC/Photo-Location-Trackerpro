@@ -1,224 +1,263 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photo Location Tracer Pro</title>
-  
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* --- General Styles --- */
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #ff6ec4, #7873f5, #3afff5);
-      background-size: 600% 600%;
-      animation: gradientBG 20s ease infinite;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    h1 { margin-bottom: 20px; text-shadow: 2px 2px 5px #000; text-align: center; }
-    .container { max-width: 800px; width: 100%; background: rgba(0,0,0,0.4); border-radius: 15px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
-    
-    input[type="file"] {
-      display: block;
-      margin: 20px auto;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-    }
-
-    button {
-      cursor: pointer;
-      padding: 10px 20px;
-      margin: 10px 5px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(45deg, #ff0, #f0f);
-      color: #000;
-      font-weight: bold;
-      transition: transform 0.2s;
-    }
-    button:hover { transform: scale(1.1); }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-    }
-    th { background: rgba(0,0,0,0.5); }
-
-    /* Neon effect */
-    .neon { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0, 0 0 30px #f0f, 0 0 40px #0ff; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Photo Location Tracer Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#0f1724;
+    --card:#0b1220aa;
+    --glass: rgba(255,255,255,0.04);
+    --accent:#ffffff;
+    --muted:#cbd5e1;
+    --accent-2:#7de2ff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:linear-gradient(135deg,#071026 0%,#09213a 50%,#0b2740 100%);font-family:'Montserrat',sans-serif;color:var(--accent);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+  .panel{width:100%;max-width:920px;border-radius:var(--radius);background:linear-gradient(180deg,var(--card),rgba(11,18,32,0.6));box-shadow:0 10px 40px rgba(2,6,23,0.7);overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+  .head{display:flex;align-items:center;gap:16px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.02)}
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ffffff44,#ffffff11);display:flex;align-items:center;justify-content:center;font-weight:800;color:#061322;font-size:20px}
+  .title{line-height:1}
+  .title h1{font-size:18px;margin:0;font-weight:800;letter-spacing:0.6px}
+  .title p{margin:2px 0 0 0;font-size:13px;color:var(--muted)}
+  .body{display:grid;grid-template-columns:420px 1fr;gap:22px;padding:22px}
+  .controls{background:var(--glass);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.02)}
+  label.select{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+  select, input[type="file"]{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);font-size:14px}
+  .file-wrap{margin-top:12px;border-radius:10px;border:1px dashed rgba(255,255,255,0.04);padding:12px;display:flex;align-items:center;gap:12px}
+  .file-name{flex:1;font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .btns{display:flex;gap:10px;margin-top:16px}
+  button.primary{flex:1;padding:12px;border-radius:10px;border:none;background:linear-gradient(90deg,#ffffff,#7de2ff);color:#061322;font-weight:700;cursor:pointer}
+  button.ghost{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);cursor:pointer}
+  .resultCard{border-radius:12px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+  .meta{display:flex;flex-direction:column;gap:8px}
+  .meta .row{display:flex;justify-content:space-between;align-items:center}
+  .meta .label{font-size:12px;color:var(--muted)}
+  .meta .value{font-size:14px;font-weight:600;color:var(--accent)}
+  .maplink{display:inline-block;margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);color:var(--accent-2);text-decoration:none;font-weight:700}
+  .footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}
+  @media (max-width:880px){ .body{grid-template-columns:1fr; } .head{gap:12px} .logo{width:48px;height:48px} }
+</style>
 </head>
 <body>
-  <h1 class="neon">Photo Location Tracer Pro</h1>
-  
-  <div class="container">
-    <input type="file" id="photoInput" accept="image/*">
-    <button id="traceBtn">Trace Photo Location</button>
-    <button id="exportBtn">Export History as CSV</button>
-    
-    <table id="historyTable">
-      <thead>
-        <tr>
-          <th>Timestamp</th>
-          <th>Photo Name</th>
-          <th>Latitude</th>
-          <th>Longitude</th>
-          <th>Address</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+  <div class="wrap">
+    <div class="panel" role="application" aria-label="Photo Location Tracer">
+      <div class="head">
+        <div class="logo">DBC</div>
+        <div class="title">
+          <h1>Photo Location Tracer Pro</h1>
+          <p>Upload a photo. The tool reads embedded GPS and shows address.</p>
+        </div>
+        <div style="margin-left:auto;color:#ffffff;font-size:18px">🤍</div>
+      </div><div class="body">
+    <div class="controls">
+      <div>
+        <label class="select">Card / Photo</label>
+        <input id="fileInput" type="file" accept="image/jpeg,image/jpg">
+      </div>
+
+      <div style="margin-top:14px">
+        <label class="select">Action</label>
+        <div style="display:flex;gap:8px">
+          <button id="traceBtn" class="primary" disabled>Trace Location</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px" class="file-wrap" id="fileWrap">
+        <div class="file-name" id="fileName">No file chosen</div>
+        <div style="font-size:12px;color:var(--muted)">JPEG only</div>
+      </div>
+    </div>
+
+    <div class="resultCard" id="resultCard" aria-live="polite">
+      <div class="meta" id="metaBox">
+        <div class="row"><div class="label">Status</div><div class="value" id="status">Awaiting upload</div></div>
+      </div>
+      <div id="addressArea" style="margin-top:12px;display:none">
+        <div class="row"><div class="label">Latitude</div><div class="value" id="latVal"></div></div>
+        <div class="row" style="margin-top:8px"><div class="label">Longitude</div><div class="value" id="lonVal"></div></div>
+        <div style="margin-top:12px"><div class="label">Address</div><div class="value" id="addrVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
+        <a id="mapLink" class="maplink" target="_blank" rel="noopener">Open in map</a>
+      </div>
+    </div>
   </div>
 
-  <script>
-    const photoInput = document.getElementById('photoInput');
-    const traceBtn = document.getElementById('traceBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const historyTable = document.getElementById('historyTable').querySelector('tbody');
+  <div class="footer">
+    <div>© <span id="year"></span> DBC — Photo Location Tracer</div>
+    <div style="color:var(--muted)">Secure • No storage • Single file</div>
+  </div>
+</div>
 
-    let historyLog = [];
+  </div><script>
+(function(){
+  const fileInput = document.getElementById('fileInput');
+  const fileName = document.getElementById('fileName');
+  const traceBtn = document.getElementById('traceBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const statusEl = document.getElementById('status');
+  const latEl = document.getElementById('latVal');
+  const lonEl = document.getElementById('lonVal');
+  const addrEl = document.getElementById('addrVal');
+  const mapLink = document.getElementById('mapLink');
+  const addressArea = document.getElementById('addressArea');
+  const yearEl = document.getElementById('year');
+  yearEl.textContent = new Date().getFullYear();
 
-    // Helper: Convert EXIF GPS to decimal
-    function gpsToDecimal(gpsData, ref) {
-      if (!gpsData) return null;
-      const [deg, min, sec] = gpsData;
-      let dec = deg + min/60 + sec/3600;
-      return (ref === "S" || ref === "W") ? -dec : dec;
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files && fileInput.files[0];
+    if (!f) {
+      fileName.textContent = 'No file chosen';
+      traceBtn.disabled = true;
+      statusEl.textContent = 'Awaiting upload';
+      return;
     }
+    fileName.textContent = f.name;
+    traceBtn.disabled = false;
+    statusEl.textContent = 'Ready to trace';
+    addressArea.style.display = 'none';
+  });
 
-    // Function: Trace photo location
-    traceBtn.addEventListener('click', async () => {
-      if (!photoInput.files.length) {
-        alert('Please select a photo first!');
+  clearBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    fileName.textContent = 'No file chosen';
+    traceBtn.disabled = true;
+    statusEl.textContent = 'Awaiting upload';
+    addressArea.style.display = 'none';
+  });
+
+  traceBtn.addEventListener('click', async () => {
+    const f = fileInput.files && fileInput.files[0];
+    if (!f) return;
+    statusEl.textContent = 'Reading photo...';
+    addressArea.style.display = 'none';
+    try {
+      const arrayBuffer = await f.arrayBuffer();
+      const exif = extractEXIF(arrayBuffer);
+      const gps = parseGPS(exif);
+      if (!gps) {
+        statusEl.textContent = 'No GPS data found';
         return;
       }
-      
-      const file = photoInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = async function(e) {
-        const arrayBuffer = e.target.result;
-        const exifData = await EXIFPromise(arrayBuffer);
-
-        const lat = gpsToDecimal(exifData.GPSLatitude, exifData.GPSLatitudeRef);
-        const lon = gpsToDecimal(exifData.GPSLongitude, exifData.GPSLongitudeRef);
-        
-        if (lat && lon) {
-          const address = await getAddress(lat, lon);
-          addToHistory(file.name, lat, lon, address);
-        } else {
-          alert('No GPS data found in this photo.');
-        }
-      };
-
-      reader.readAsArrayBuffer(file);
-    });
-
-    // Function: Add entry to history
-    function addToHistory(photoName, lat, lon, address) {
-      const timestamp = new Date().toLocaleString();
-      const entry = { timestamp, photoName, lat, lon, address };
-      historyLog.push(entry);
-      renderHistory();
+      statusEl.textContent = 'Reverse geocoding...';
+      latEl.textContent = gps.lat.toFixed(6);
+      lonEl.textContent = gps.lon.toFixed(6);
+      const addr = await reverseGeo(gps.lat, gps.lon);
+      addrEl.textContent = addr || 'Address not available';
+      mapLink.href = `https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=18/${gps.lat}/${gps.lon}`;
+      addressArea.style.display = 'block';
+      statusEl.textContent = 'Location found';
+    } catch (e) {
+      statusEl.textContent = 'Unable to process file';
+      addressArea.style.display = 'none';
     }
+  });
 
-    // Function: Render history table
-    function renderHistory() {
-      historyTable.innerHTML = '';
-      historyLog.forEach(entry => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.timestamp}</td>
-          <td>${entry.photoName}</td>
-          <td>${entry.lat}</td>
-          <td>${entry.lon}</td>
-          <td>${entry.address}</td>
-        `;
-        historyTable.appendChild(row);
-      });
-    }
+  function reverseGeo(lat, lon){
+    return fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(j => j && (j.display_name || ''))
+      .catch(() => '');
+  }
 
-    // Function: Export CSV
-    exportBtn.addEventListener('click', () => {
-      if (!historyLog.length) return alert('No history to export!');
-      let csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += "Timestamp,Photo Name,Latitude,Longitude,Address\n";
-      historyLog.forEach(e => {
-        csvContent += `${e.timestamp},${e.photoName},${e.lat},${e.lon},${e.address}\n`;
-      });
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "photo_location_history.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    // Function: Get Address from Lat/Lon using Nominatim API
-    async function getAddress(lat, lon) {
-      try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
-        const data = await res.json();
-        return data.display_name || '';
-      } catch {
-        return '';
+  function extractEXIF(buffer){
+    const view = new DataView(buffer);
+    if (view.getUint16(0,false) !== 0xFFD8) return null;
+    let offset = 2;
+    const length = view.byteLength;
+    while (offset < length){
+      if (view.getUint16(offset,false) === 0xFFE1){
+        const app1len = view.getUint16(offset+2,false);
+        const start = offset + 4;
+        const exifHeader = new Uint8Array(buffer, start, 6);
+        const hdrStr = String.fromCharCode.apply(null, Array.from(exifHeader));
+        if (hdrStr !== 'Exif\0\0') return null;
+        const tiffOffset = start + 6;
+        return parseTIFF(buffer, tiffOffset);
+      } else {
+        offset += 2 + view.getUint16(offset+2,false);
       }
     }
+    return null;
+  }
 
-    // Function: Extract EXIF GPS (using EXIF.js logic inline)
-    function EXIFPromise(arrayBuffer) {
-      return new Promise((resolve) => {
-        const exif = {};
-        try {
-          const view = new DataView(arrayBuffer);
-          if (view.getUint16(0, false) != 0xFFD8) return resolve(exif); // not JPEG
-          let offset = 2, length = view.byteLength, marker;
-          while (offset < length) {
-            if (view.getUint16(offset, false) == 0xFFE1) {
-              const exifLength = view.getUint16(offset+2, false);
-              const exifStr = new TextDecoder().decode(new Uint8Array(arrayBuffer, offset+4, exifLength-2));
-              // Minimal GPS parsing (regex)
-              const latMatch = exifStr.match(/GPSLatitude.*?(\d+)[^\d]+(\d+)[^\d]+([\d.]+)/);
-              const latRefMatch = exifStr.match(/GPSLatitudeRef.*?([NS])/);
-              const lonMatch = exifStr.match(/GPSLongitude.*?(\d+)[^\d]+(\d+)[^\d]+([\d.]+)/);
-              const lonRefMatch = exifStr.match(/GPSLongitudeRef.*?([EW])/);
-              if (latMatch) exif.GPSLatitude = [parseFloat(latMatch[1]), parseFloat(latMatch[2]), parseFloat(latMatch[3])];
-              if (latRefMatch) exif.GPSLatitudeRef = latRefMatch[1];
-              if (lonMatch) exif.GPSLongitude = [parseFloat(lonMatch[1]), parseFloat(lonMatch[2]), parseFloat(lonMatch[3])];
-              if (lonRefMatch) exif.GPSLongitudeRef = lonRefMatch[1];
-              break;
-            }
-            offset += 2 + view.getUint16(offset+2, false);
-          }
-        } catch { /* ignore */ }
-        resolve(exif);
-      });
+  function parseTIFF(buffer, tiffOffset){
+    const view = new DataView(buffer);
+    const byteOrder = view.getUint16(tiffOffset, false);
+    const little = byteOrder === 0x4949;
+    const getUint16 = (off) => view.getUint16(off, little);
+    const getUint32 = (off) => view.getUint32(off, little);
+    const tagMark = getUint16(tiffOffset + 2);
+    if (tagMark !== 0x002A) return null;
+    const ifd0Offset = getUint32(tiffOffset + 4) + tiffOffset;
+    const exif = {};
+    const entries = getUint16(ifd0Offset);
+    let gpsPointer = 0;
+    for (let i=0;i<entries;i++){
+      const entryOffset = ifd0Offset + 2 + i*12;
+      const tag = getUint16(entryOffset);
+      const type = getUint16(entryOffset + 2);
+      const count = getUint32(entryOffset + 4);
+      const valueOffset = entryOffset + 8;
+      const value = getUint32(valueOffset);
+      if (tag === 0x8825) gpsPointer = value + tiffOffset;
     }
-  </script>
-</body>
+    if (gpsPointer){
+      const gpsEntries = getUint16(gpsPointer);
+      const gps = {};
+      for (let i=0;i<gpsEntries;i++){
+        const entryOffset = gpsPointer + 2 + i*12;
+        const tag = getUint16(entryOffset);
+        const type = getUint16(entryOffset + 2);
+        const count = getUint32(entryOffset + 4);
+        const valOff = getUint32(entryOffset + 8);
+        gps[tag] = {type,count,valOff};
+      }
+      exif._gps = extractGPSValues(buffer, tiffOffset, gps, little);
+    }
+    return exif;
+  }
+
+  function extractGPSValues(buffer, tiffOffset, gpsTags, little){
+    const view = new DataView(buffer);
+    const readUint32 = (off) => view.getUint32(off, little);
+    const readUint16 = (off) => view.getUint16(off, little);
+    function readRational(off){
+      const num = readUint32(off);
+      const den = readUint32(off+4);
+      return den ? num/den : 0;
+    }
+    const gps = {};
+    if (gpsTags[1]) gps.latRef = String.fromCharCode.apply(null, new Uint8Array(buffer, gpsTags[1].valOff, 2)).trim();
+    if (gpsTags[3]) gps.lonRef = String.fromCharCode.apply(null, new Uint8Array(buffer, gpsTags[3].valOff, 2)).trim();
+    if (gpsTags[2]){
+      const off = gpsTags[2].valOff;
+      const deg = readRational(off);
+      const min = readRational(off+8);
+      const sec = readRational(off+16);
+      gps.lat = deg + min/60 + sec/3600;
+      if (gps.latRef === 'S') gps.lat = -gps.lat;
+    }
+    if (gpsTags[4]){
+      const off = gpsTags[4].valOff;
+      const deg = readRational(off);
+      const min = readRational(off+8);
+      const sec = readRational(off+16);
+      gps.lon = deg + min/60 + sec/3600;
+      if (gps.lonRef === 'W') gps.lon = -gps.lon;
+    }
+    if (typeof gps.lat === 'number' && typeof gps.lon === 'number' && !isNaN(gps.lat) && !isNaN(gps.lon)) return {lat: gps.lat, lon: gps.lon};
+    return null;
+  }
+
+  function parseGPS(exif){
+    if (!exif || !exif._gps) return null;
+    return exif._gps;
+  }
+})();
+</script></body>
 </html>
