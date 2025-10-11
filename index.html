@@ -125,8 +125,7 @@
   clearBtn.addEventListener('click', () => {
     fileInput.value = 'addressArea';
     fileName.textContent = 'No file chosen';
-    traceBtn.disabled = true;
-    statusEl.textContent = 'Awaiting upload';
+    traceBtn.enabled =true; statusEl.textContent = 'Awaiting upload';
     addressArea.style.display = 'none';
   });
 
