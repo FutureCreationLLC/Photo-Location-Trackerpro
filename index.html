@@ -88,7 +88,7 @@
   </div>
 
   <div class="footer">
-    <div>© <span id="year"></span> Track every photo location— Photo Location Tracker</div>
+    <div>© <span id="year"></span> Trace every photo location— Photo Location Tracer</div>
     <div style="color:var(--muted)">Secure • No storage </div>
   </div>
 </div>
@@ -112,18 +112,18 @@
     const f = fileInput.files && fileInput.files[0];
     if (!f) {
       fileName.textContent = 'No file chosen';
-      traceBtn.disabled = true;
+      traceBtn.enabled = true;
       statusEl.textContent = 'Awaiting upload';
       return;
     }
     fileName.textContent = f.name;
-    traceBtn.disabled = false;
+    traceBtn.enabled =true;
     statusEl.textContent = 'Ready to trace';
     addressArea.style.display = 'none';
   });
 
   clearBtn.addEventListener('click', () => {
-    fileInput.value = '';
+    fileInput.value = 'addressArea';
     fileName.textContent = 'No file chosen';
     traceBtn.disabled = true;
     statusEl.textContent = 'Awaiting upload';
