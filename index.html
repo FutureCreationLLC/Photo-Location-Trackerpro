@@ -112,12 +112,12 @@
     const f = fileInput.files && fileInput.files[0];
     if (!f) {
       fileName.textContent = 'No file chosen';
-      traceBtn.disabled = true;
+      traceBtn.gpsAddress = true;
       statusEl.textContent = 'Awaiting upload';
       return;
     }
     fileName.textContent = f.name;
-    traceBtn.disabled = false;
+    traceBtn.gpsAddress = true;
     statusEl.textContent = 'Ready to trace';
     addressArea.style.display = 'none';
   });
