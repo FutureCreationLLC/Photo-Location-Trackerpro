@@ -47,7 +47,7 @@
   <div class="wrap">
     <div class="panel" role="application" aria-label="Photo Location Tracker">
       <div class="head">
-        <div class="logo">PLT</div>
+        <div class="logo"> PLT</div>
         <div class="title">
           <h1>Photo Location Tracker Pro</h1>
           <p>Upload a photo. The tool reads embedded GPS and shows address.</p>
@@ -63,7 +63,7 @@
       <div style="margin-top:14px">
         <label class="select">Action</label>
         <div style="display:flex;gap:8px">
-          <button id="traceBtn" class="primary" disabled>Trace Location</button>
+          <button id="traceBtn" class="primary" disabled>Track Location</button>
           <button id="clearBtn" class="ghost">Clear</button>
         </div>
       </div>
@@ -78,10 +78,10 @@
       <div class="meta" id="metaBox">
         <div class="row"><div class="label">Status</div><div class="value" id="status">Awaiting upload</div></div>
       </div>
-      <div id="addressArea" style="margin-top:12px;display:none">
+      <div id="gpsLocation" style="margin-top:12px;display:none">
         <div class="row"><div class="label">Latitude</div><div class="value" id="latVal"></div></div>
         <div class="row" style="margin-top:8px"><div class="label">Longitude</div><div class="value" id="lonVal"></div></div>
-        <div style="margin-top:12px"><div class="label">Address</div><div class="value" id="addrVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
+        <div style="margin-top:12px"><div class="label"Location</div><div class="value" id="LocVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
         <a id="mapLink" class="maplink" target="_blank" rel="noopener">Open in map</a>
       </div>
     </div>
@@ -102,9 +102,9 @@
   const statusEl = document.getElementById('status');
   const latEl = document.getElementById('latVal');
   const lonEl = document.getElementById('lonVal');
-  const addrEl = document.getElementById('addrVal');
-  const mapLink = document.getElementById('mapLink');
-  const addressArea = document.getElementById('addressArea');
+  const locEl = document.getElementById('locVal');
+  const gpsmapLink = document.getElementById('gpsmapLink');
+  const locationAddress = document.getElementById('locationAddress');
   const yearEl = document.getElementById('year');
   yearEl.textContent = new Date().getFullYear();
 
@@ -112,14 +112,14 @@
     const f = fileInput.files && fileInput.files[0];
     if (!f) {
       fileName.textContent = 'No file chosen';
-      traceBtn.gpsAddress = true;
+      traceBtn.gpsLocation = true;
       statusEl.textContent = 'Awaiting upload';
       return;
     }
     fileName.textContent = f.name;
-    traceBtn.gpsAddress = true;
+    traceBtn.gpsLocation = true;
     statusEl.textContent = 'Ready to trace';
-    addressArea.style.display = 'none';
+    LocationAddress.style.display = 'none';
   });
 
   clearBtn.addEventListener('click', () => {
@@ -127,14 +127,14 @@
     fileName.textContent = 'No file chosen';
     traceBtn.disabled = true;
     statusEl.textContent = 'Awaiting upload';
-    addressArea.style.display = 'none';
+    LocationAddress.style.display = 'none';
   });
 
   traceBtn.addEventListener('click', async () => {
     const f = fileInput.files && fileInput.files[0];
     if (!f) return;
     statusEl.textContent = 'Reading photo...';
-    addressArea.style.display = 'none';
+    LocationAddress.style.display = 'none';
     try {
       const arrayBuffer = await f.arrayBuffer();
       const exif = extractEXIF(arrayBuffer);
@@ -148,12 +148,12 @@
       lonEl.textContent = gps.lon.toFixed(6);
       const addr = await reverseGeo(gps.lat, gps.lon);
       addrEl.textContent = addr || 'Address not available';
-      mapLink.href = `https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=18/${gps.lat}/${gps.lon}`;
-      addressArea.style.display = 'block';
+      gpsmapLink.href = `https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=18/${gps.lat}/${gps.lon}`;
+      LocationAddress.style.display = 'block';
       statusEl.textContent = 'Location found';
     } catch (e) {
       statusEl.textContent = 'Unable to process file';
-      addressArea.style.display = 'none';
+      LocationAddress.style.display = 'none';
     }
   });
 
