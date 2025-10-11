@@ -1,9 +1,10 @@
 <!doctype html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Photo Location Tracker Pro</title>
+<title>Photo Location Tracer Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -45,7 +46,7 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="panel" role="application" aria-label="Photo Location Tracker">
+    <div class="panel" role="application" aria-label="Photo Location Tracer">
       <div class="head">
         <div class="logo">PLT</div>
         <div class="title">
@@ -78,17 +79,17 @@
       <div class="meta" id="metaBox">
         <div class="row"><div class="label">Status</div><div class="value" id="status">Awaiting upload</div></div>
       </div>
-      <div id="gpsAddress" style="margin-top:12px;display:none">
+      <div id="addressArea" style="margin-top:12px;display:none">
         <div class="row"><div class="label">Latitude</div><div class="value" id="latVal"></div></div>
         <div class="row" style="margin-top:8px"><div class="label">Longitude</div><div class="value" id="lonVal"></div></div>
-        <div style="margin-top:12px"><div class="label">gpsAddress</div><div class="value" id="gpsaddrVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
-        <a id="gpsLink" class="gpsLink" target="_blank" rel="noopener">Open in map</a>
+        <div style="margin-top:12px"><div class="label">Address</div><div class="value" id="addrVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
+        <a id="mapLink" class="maplink" target="_blank" rel="noopener">Open in map</a>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <div>© <span id="year"></span> Trace every photo location— Photo Location Tracer</div>
+    <div>© <span id="year"></span> Track every photo location— Photo Location Tracker</div>
     <div style="color:var(--muted)">Secure • No storage </div>
   </div>
 </div>
@@ -102,9 +103,9 @@
   const statusEl = document.getElementById('status');
   const latEl = document.getElementById('latVal');
   const lonEl = document.getElementById('lonVal');
-  const gpsaddrEl = document.getElementById('gpsaddrVal');
-  const gpsLink = document.getElementById('gpsLink');
-  const gpsAddress = document.getElementById('gpsAddress');
+  const addrEl = document.getElementById('addrVal');
+  const mapLink = document.getElementById('mapLink');
+  const addressArea = document.getElementById('addressArea');
   const yearEl = document.getElementById('year');
   yearEl.textContent = new Date().getFullYear();
 
@@ -117,9 +118,9 @@
       return;
     }
     fileName.textContent = f.name;
-    traceBtn.disabled = true;
+    traceBtn.disabled = false;
     statusEl.textContent = 'Ready to trace';
-    gpsAddress.style.display = 'none';
+    addressArea.style.display = 'none';
   });
 
   clearBtn.addEventListener('click', () => {
@@ -127,33 +128,33 @@
     fileName.textContent = 'No file chosen';
     traceBtn.disabled = true;
     statusEl.textContent = 'Awaiting upload';
-    gpsAddress.style.display = 'none';
+    addressArea.style.display = 'none';
   });
 
   traceBtn.addEventListener('click', async () => {
     const f = fileInput.files && fileInput.files[0];
     if (!f) return;
     statusEl.textContent = 'Reading photo...';
-    gpsAddress.style.display = 'none';
+    addressArea.style.display = 'none';
     try {
       const arrayBuffer = await f.arrayBuffer();
       const exif = extractEXIF(arrayBuffer);
-      const gpsAddress = parseGPS(exif);
+      const gps = parseGPS(exif);
       if (!gps) {
         statusEl.textContent = 'No GPS data found';
         return;
       }
       statusEl.textContent = 'Reverse geocoding...';
-      latEl.textContent = gpsAddress.lat.toFixed(6);
-      lonEl.textContent = gpsAddress.lon.toFixed(6);
-      const gpsaddr = await reverseGeo(gpsAddress.lat, gpsAddress.lon);
-      gpsaddrEl.textContent = gpsaddr || 'Address not available';
-      gpsLink.href = `https://www.openstreetmap.org/?mlat=${gpsAddress.lat}&mlon=${gpsAddress.lon}#map=18/${gps.lat}/${gps.lon}`;
-      gpsAddress.style.display = 'block';
+      latEl.textContent = gps.lat.toFixed(6);
+      lonEl.textContent = gps.lon.toFixed(6);
+      const addr = await reverseGeo(gps.lat, gps.lon);
+      addrEl.textContent = addr || 'Address not available';
+      mapLink.href = `https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=18/${gps.lat}/${gps.lon}`;
+      addressArea.style.display = 'block';
       statusEl.textContent = 'Location found';
     } catch (e) {
       statusEl.textContent = 'Unable to process file';
-    gpsAddress style.display = 'none';
+      addressArea.style.display = 'none';
     }
   });
 
@@ -166,12 +167,12 @@
 
   function extractEXIF(buffer){
     const view = new DataView(buffer);
-    if (view.getUint16(0,true) !== 0xFFD8) return null;
+    if (view.getUint16(0,false) !== 0xFFD8) return null;
     let offset = 2;
     const length = view.byteLength;
     while (offset < length){
-      if (view.getUint16(offset,true) === 0xFFE1){
-        const app1len = view.getUint16(offset+2,true);
+      if (view.getUint16(offset,false) === 0xFFE1){
+        const app1len = view.getUint16(offset+2,false);
         const start = offset + 4;
         const exifHeader = new Uint8Array(buffer, start, 6);
         const hdrStr = String.fromCharCode.apply(null, Array.from(exifHeader));
@@ -179,7 +180,7 @@
         const tiffOffset = start + 6;
         return parseTIFF(buffer, tiffOffset);
       } else {
-        offset += 2 + view.getUint16(offset+2,true);
+        offset += 2 + view.getUint16(offset+2,false);
       }
     }
     return null;
@@ -187,7 +188,7 @@
 
   function parseTIFF(buffer, tiffOffset){
     const view = new DataView(buffer);
-    const byteOrder = view.getUint16(tiffOffset, true);
+    const byteOrder = view.getUint16(tiffOffset, false);
     const little = byteOrder === 0x4949;
     const getUint16 = (off) => view.getUint16(off, little);
     const getUint32 = (off) => view.getUint32(off, little);
@@ -259,5 +260,6 @@
     return exif._gps;
   }
 })();
-</script></body>
+</script>
+</body>
 </html>
