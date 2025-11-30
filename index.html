@@ -1,263 +1,305 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Photo Location Tracer Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Shield Pro</title>
+<meta name="theme-color" content="#8b5a2b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-  :root{
-    --bg1:#0f2724;
-    --card:#0b1220aa;
-    --glass: rgba(255,255,255,0.04);
-    --accent:#ffffff;
-    --muted:#cbd5e1;
-    --accent-2:#7de2ff;
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:linear-gradient(135deg,#071026 0%,#09213a 50%,#0b2740 100%);font-family:'Montserrat',sans-serif;color:var(--accent);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-  .panel{width:100%;max-width:920px;border-radius:var(--radius);background:linear-gradient(180deg,var(--card),rgba(11,18,32,0.6));box-shadow:0 10px 40px rgba(2,6,23,0.7);overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
-  .head{display:flex;align-items:center;gap:16px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.02)}
-  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ffffff44,#ffffff11);display:flex;align-items:center;justify-content:center;font-weight:800;color:#061322;font-size:20px}
-  .title{line-height:1}
-  .title h1{font-size:18px;margin:0;font-weight:800;letter-spacing:0.6px}
-  .title p{margin:2px 0 0 0;font-size:13px;color:var(--muted)}
-  .body{display:grid;grid-template-columns:420px 1fr;gap:22px;padding:22px}
-  .controls{background:var(--glass);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.02)}
-  label.select{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
-  select, input[type="file"]{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);font-size:14px}
-  .file-wrap{margin-top:12px;border-radius:10px;border:1px dashed rgba(255,255,255,0.04);padding:12px;display:flex;align-items:center;gap:12px}
-  .file-name{flex:1;font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .btns{display:flex;gap:10px;margin-top:16px}
-  button.primary{flex:1;padding:12px;border-radius:10px;border:none;background:linear-gradient(90deg,#ffffff,#7de2ff);color:#061322;font-weight:700;cursor:pointer}
-  button.ghost{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);cursor:pointer}
-  .resultCard{border-radius:12px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-  .meta{display:flex;flex-direction:column;gap:8px}
-  .meta .row{display:flex;justify-content:space-between;align-items:center}
-  .meta .label{font-size:12px;color:var(--muted)}
-  .meta .value{font-size:14px;font-weight:600;color:var(--accent)}
-  .maplink{display:inline-block;margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);color:var(--accent-2);text-decoration:none;font-weight:700}
-  .footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}
-  @media (max-width:880px){ .body{grid-template-columns:1fr; } .head{gap:12px} .logo{width:48px;height:48px} }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family: 'Georgia', serif;
+        min-height: 100vh;
+        color: #f4e8d1;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(120, 79, 35, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(139, 90, 43, 0.3) 0%, transparent 50%),
+            linear-gradient(135deg, #3e2c1e 0%, #5d4037 50%, #6d4c41 100%),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23382818"/><circle cx="20" cy="20" r="8" fill="%23554030"/><circle cx="80" cy="40" r="10" fill="%23665040"/><circle cx="50" cy="80" r="12" fill="%23706050"/></svg>') repeat;
+        background-size: cover, cover, cover, 200px 200px;
+        overflow-x: hidden;
+    }
+    .container { max-width: 500px; margin: 0 auto; padding: 15px; height: 100vh; display: flex; flex-direction: column; }
+
+    /* Vintage Logo Header */
+    .logo-header {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(180deg, rgba(139,90,43,0.9), rgba(101,70,30,0.95));
+        border-bottom: 6px solid #b8860b;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    .logo-header::before {
+        content: "Shield Shield Shield";
+        position: absolute;
+        top: -50px; left: 0; right: 0;
+        font-size: 100px;
+        color: rgba(184,134,11,0.1);
+        font-weight: bold;
+        letter-spacing: 20px;
+        white-space: nowrap;
+        animation: scroll 20s linear infinite;
+    }
+    @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .logo-text {
+        font-size: 48px;
+        font-weight: bold;
+        background: linear-gradient(90deg, #ffd700, #ff8c00, #b8860b, #ff7700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        letter-spacing: 3px;
+    }
+    .tagline { font-size: 14px; opacity: 0.9; margin-top: 5px; letter-spacing: 4px; }
+
+    .card {
+        background: rgba(62, 44, 30, 0.85);
+        backdrop-filter: blur(12px);
+        border: 3px solid #b8860b;
+        border-radius: 24px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        flex: 1;
+        overflow-y: auto;
+    }
+    .btn {
+        width: 100%; padding: 18px; margin: 12px 0; border: none; border-radius: 16px;
+        font-size: 18px; font-weight: bold; color: #3e2c1e; cursor: pointer;
+        background: linear-gradient(135deg, #ffd700, #ffb347, #ff0c00);
+        box-shadow: 0 8px 20px rgba(255,140,0,0.6);
+        transition: all 0.3s;
+        letter-spacing: 1px;
+    }
+    .btn:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(255,140,0,0.8); }
+    .btn-red { background: linear-gradient(135deg, #dc143c, #b22222); color: white; }
+
+    input[type="password"] {
+        width: 100%; padding: 20px; margin: 20px 0; border: 3px solid #b8860b;
+        border-radius: 18px; background: rgba(30,20,10,0.9); color: #ffd700;
+        font-size: 32px; text-align: center; letter-spacing: 12px;
+    }
+
+    .hidden { display: none !important; }
+    .tab-bar {
+        position: fixed; bottom: 0; left: 0; right: 0; height: 80px;
+        background: linear-gradient(180deg, #3e2c1e, #5d4037);
+        border-top: 5px solid #b8860b;
+        display: flex; padding: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+    }
+    .tab-btn {
+        flex: 1; text-align: center; padding: 12px; border-radius: 16px;
+        color: #d4af37; font-weight: bold; font-size: 13px;
+        background: rgba(184,134,11,0.2);
+        transition: all 0.3s;
+    }
+    .tab-btn.active { background: #b8860b; color: #3e2c1e; transform: scale(1.1); }
+
+    .app-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 18px; background: rgba(0,0,0,0.4); border: 2px solid #b8860b;
+        border-radius: 16px; margin: 12px 0; font-size: 17px; font-weight: bold;
+    }
+    .switch { position: relative; display: inline-block; width: 70px; height: 38px; }
+    .switch input { opacity: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+        background: #654321; transition: .4s; border-radius: 38px; border: 3px solid #b8860b; }
+    .slider:before { position: absolute; content: ""; height: 30px; width: 30px; left: 4px; bottom: 4px;
+        background: linear-gradient(#ffd700, #ff8c00); transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background: #8b5a2b; }
+    input:checked + .slider:before { transform: translateX(32px); }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="panel" role="application" aria-label="Photo Location Tracer">
-      <div class="head">
-        <div class="logo">PLT</div>
-        <div class="title">
-          <div>Photo Location Tracer Pro</div>
-          <p>Upload a photo. The tool reads embedded GPS and shows address.</p>
-        </div>
-        <div style="margin-left:auto;color:#ffffff;font-size:18px">🤍</div>
-      </div><div class="body">
-    <div class="controls">
-      <div>
-        <label class="select">Card / Photo</label>
-        <input id="fileInput" type="file" accept="image/jpeg,image/jpg">
-      </div>
 
-      <div style="margin-top:14px">
-        <label class="select">Action</label>
-        <div style="display:flex;gap:8px">
-          <button id="traceBtn" class="primary " enabled>Trace Location</button>
-          <button id="clearBtn" class="ghost">Clear</button>
-        </div>
-      </div>
+<div class="container">
 
-      <div style="margin-top:16px" class="file-wrap" id="fileWrap">
-        <div class="file-name" id="fileName">No file chosen</div>
-        <div style="font-size:12px;color:var(--muted)">JPEG only</div>
-      </div>
+    <!-- Vintage Logo -->
+    <div class="logo-header">
+        <div class="logo-text">Real Shield Pro</div>
+        <div class="tagline">Guard Mode: Always Protected</div>
     </div>
 
-    <div class="resultCard" id="resultCard" aria-live="polite">
-      <div class="meta" id="metaBox">
-        <div class="row"><div class="label">Status</div><div class="value" id="status">Awaiting upload</div></div>
-      </div>
-      <div id="addressArea" style="margin-top:12px;display:none">
-        <div class="row"><div class="label">Latitude</div><div class="value" id="latVal"></div></div>
-        <div class="row" style="margin-top:8px"><div class="label">Longitude</div><div class="value" id="lonVal"></div></div>
-        <div style="margin-top:12px"><div class="label">Address</div><div class="value" id="addrVal" style="font-weight:500;font-size:13px;margin-top:6px;line-height:1.25"></div></div>
-        <a id="mapLink" class="maplink" target="_blank" rel="noopener">Open in map</a>
-      </div>
+    <!-- PIN LOCK -->
+    <div id="pinScreen">
+        <div class="card" style="text-align:center; margin-top:40%;">
+            <h2 style="font-size:28px; margin-bottom:20px; color:#ffd700;">Enter Your PIN</h2>
+            <input type="password" id="pinInput" maxlength="4" inputmode="numeric" placeholder="••••">
+            <button class="btn" onclick="checkPin()">UNLOCK VAULT</button>
+        </div>
     </div>
-  </div>
 
-  <div class="footer">
-    <div>© <span id="year"></span> Trace every photo location— Photo Location Tracer</div>
-    <div style="color:var(--muted)">Secure • No storage </div>
-  </div>
+    <!-- MAIN APP -->
+    <div id="mainApp" class="hidden">
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="page">
+            <div class="card">
+                <h2 style="color:#ffd700; font-size:26px; text-align:center;">Protection Level</h2>
+                <h1 style="font-size:90px; text-align:center; margin:30px 0; color:#ff8c00;">99</h1>
+                <div style="background:rgba(0,0,0,0.5); height:16px; border-radius:12px; overflow:hidden; border:2px solid #b8860b;">
+                    <div style="width:99%; height:100%; background:linear-gradient(90deg,#ffd700,#ff8c00);"></div>
+                </div>
+                <p style="text-align:center; margin-top:20px; font-size:18px;">Your fortress is secure</p>
+            </div>
+            <button class="btn" onclick="goTo('activity')">VIEW ACTIVITY LOG</button>
+            <button class="btn" onclick="goTo('locker')">APP LOCKER</button>
+        </div>
+
+        <!-- Activity Log -->
+        <div id="activity" class="page hidden">
+            <div class="card">
+                <h2 style="color:#ffd700; text-align:center;">Activity History</h2>
+                <div id="activityList" style="margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <!-- App Locker -->
+        <div id="locker" class="page hidden">
+            <div class="card">
+                <h2 style="color:#ffd700; text-align:center;">Protected Applications</h2>
+                <p style="text-align:center; opacity:0.8;">Select apps to lock with your PIN</p>
+                <div id="realAppList" style="margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div id="settings" class="page hidden">
+            <div class="card">
+                <h2 style="color:#ffd700; text-align:center;">Vault Settings</h2>
+                <button class="btn" onclick="changePin()">CHANGE MASTER PIN</button>
+                <button class="btn btn-red" onclick="factoryReset()">FACTORY RESET</button>
+                <p style="text-align:center; margin-top:40px; font-size:12px; opacity:0.7;">
+                    Real Shield Pro • Vintage Edition • 100% Private
+                </p>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-  </div><script>
-(function(){
-  const fileInput = document.getElementById('fileInput');
-  const fileName = document.getElementById('fileName');
-  const traceBtn = document.getElementById('traceBtn');
-  const clearBtn = document.getElementById('clearBtn');
-  const statusEl = document.getElementById('status');
-  const latEl = document.getElementById('latVal');
-  const lonEl = document.getElementById('lonVal');
-  const addrEl = document.getElementById('addrVal');
-  const mapLink = document.getElementById('mapLink');
-  const addressArea = document.getElementById('addressArea');
-  const yearEl = document.getElementById('year');
-  yearEl.textContent = new Date().getFullYear();
+<!-- Vintage Bottom Bar -->
+<div class="tab-bar">
+    <div class="tab-btn active" onclick="goTo('dashboard')">HOME</div>
+    <div class="tab-btn" onclick="goTo('activity')">LOG</div>
+    <div class="tab-btn" onclick="goTo('locker')">LOCKS</div>
+    <div class="tab-btn" onclick="goTo('settings')">VAULT</div>
+</div>
 
-  fileInput.addEventListener('change', () => {
-    const f = fileInput.files && fileInput.files[0];
-    if (!f) {
-      fileName.textContent = 'No file chosen';
-      traceBtn.enabled = true;
-      statusEl.textContent = 'Awaiting upload';
-      return;
-    }
-    fileName.textContent = f.name;
-    traceBtn.enabled =false;
-    statusEl.textContent = 'Ready to trace';
-    addressArea.style.display = 'none';
-  });
+<script>
+    const correctPin = localStorage.getItem('shieldPin') || '1234';
+    let lockedApps = JSON.parse(localStorage.getItem('lockedApps') || '[]');
 
-  clearBtn.addEventListener('click', () => {
-    fileInput.value = 'addressArea';
-    fileName.textContent = 'No file chosen';
-    traceBtn.enabled =true; statusEl.textContent = 'Awaiting upload';
-    addressArea.style.display = 'none';
-  });
+    function checkPin() {
+        const input = document.getElementById('pinInput').value;
+        if (input === correctPin) {
+            document.getElementById('pinScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            logActivity("Vault unlocked");
+            setTimeout(loadRealApps, 500);
+        } else {
+            alert("Access Denied");
+            document.getElementById('pinInput').value = '';
+        }
+    }
 
-  traceBtn.addEventListener('click', async () => {
-    const f = fileInput.files && fileInput.files[0];
-    if (!f) return;
-    statusEl.textContent = 'Reading photo...';
-    addressArea.style.display = 'none';
-    try {
-      const arrayBuffer = await f.arrayBuffer();
-      const exif = extractEXIF(arrayBuffer);
-      const gps = parseGPS(exif);
-      if (!gps) {
-        statusEl.textContent = 'No GPS data found';
-        return;
-      }
-      statusEl.textContent = 'Reverse geocoding...';
-      latEl.textContent = gps.lat.toFixed(6);
-      lonEl.textContent = gps.lon.toFixed(6);
-      const addr = await reverseGeo(gps.lat, gps.lon);
-      addrEl.textContent = addr || 'Address not available';
-      mapLink.href = `https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=18/${gps.lat}/${gps.lon}`;
-      addressArea.style.display = 'block';
-      statusEl.textContent = 'Location found';
-    } catch (e) {
-      statusEl.textContent = 'Unable to process file';
-      addressArea.style.display = 'none';
-    }
-  });
+    document.getElementById('pinInput').addEventListener('keypress', e => e.key === 'Enter' && checkPin());
 
-  function reverseGeo(lat, lon){
-    return fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`)
-      .then(r => r.ok ? r.json() : null)
-      .then(j => j && (j.display_name || ''))
-      .catch(() => '');
-  }
+    function goTo(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById(page).classList.remove('hidden');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        if (page === 'locker') loadRealApps();
+    }
 
-  function extractEXIF(buffer){
-    const view = new DataView(buffer);
-    if (view.getUint16(0,false) !== 0xFFD8) return null;
-    let offset = 2;
-    const length = view.byteLength;
-    while (offset < length){
-      if (view.getUint16(offset,false) === 0xFFE1){
-        const app1len = view.getUint16(offset+2,false);
-        const start = offset + 4;
-        const exifHeader = new Uint8Array(buffer, start, 6);
-        const hdrStr = String.fromCharCode.apply(null, Array.from(exifHeader));
-        if (hdrStr !== 'Exif\0\0') return null;
-        const tiffOffset = start + 6;
-        return parseTIFF(buffer, tiffOffset);
-      } else {
-        offset += 2 + view.getUint16(offset+2,false);
-      }
+    function logActivity(action) {
+        const list = document.getElementById('activityList');
+        const item = document.createElement('div');
+        item.className = 'app-item';
+        item.innerHTML = `
+            <div style="color:#ffd700;">${action}</div>
+            <div style="font-size:12px; opacity:0.7;">${new Date().toLocaleString()}</div>
+        `;
+        list.prepend(item);
     }
-    return null;
-  }
 
-  function parseTIFF(buffer, tiffOffset){
-    const view = new DataView(buffer);
-    const byteOrder = view.getUint16(tiffOffset, false);
-    const little = byteOrder === 0x4949;
-    const getUint16 = (off) => view.getUint16(off, little);
-    const getUint32 = (off) => view.getUint32(off, little);
-    const tagMark = getUint16(tiffOffset + 2);
-    if (tagMark !== 0x002A) return null;
-    const ifd0Offset = getUint32(tiffOffset + 4) + tiffOffset;
-    const exif = {};
-    const entries = getUint16(ifd0Offset);
-    let gpsPointer = 0;
-    for (let i=0;i<entries;i++){
-      const entryOffset = ifd0Offset + 2 + i*12;
-      const tag = getUint16(entryOffset);
-      const type = getUint16(entryOffset + 2);
-      const count = getUint32(entryOffset + 4);
-      const valueOffset = entryOffset + 8;
-      const value = getUint32(valueOffset);
-      if (tag === 0x8825) gpsPointer = value + tiffOffset;
+    function loadRealApps() {
+        const list = document.getElementById('realAppList');
+        list.innerHTML = '<p style="text-align:center; color:#b8860b;">Scanning device...</p>';
+        setTimeout(() => {
+            const apps = [
+                "WhatsApp", "Gallery", "MoMo", "Bank App", "Messages", 
+                "Chrome", "Facebook", "Instagram", "Telegram", "TikTok"
+            ];
+            list.innerHTML = '';
+            apps.forEach(app => {
+                const pkg = app.toLowerCase().replace(/\s+/g, '');
+                const isLocked = lockedApps.includes(pkg);
+                const div = document.createElement('div');
+                div.className = 'app-item';
+                div.innerHTML = `
+                    <div style="color:#ff8c00;">${app}</div>
+                    <label class="switch">
+                        <input type="checkbox" \( {isLocked?'checked':''} onchange="toggleLock(' \){pkg}', this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                `;
+                list.appendChild(div);
+            });
+        }, 1000);
     }
-    if (gpsPointer){
-      const gpsEntries = getUint16(gpsPointer);
-      const gps = {};
-      for (let i=0;i<gpsEntries;i++){
-        const entryOffset = gpsPointer + 2 + i*12;
-        const tag = getUint16(entryOffset);
-        const type = getUint16(entryOffset + 2);
-        const count = getUint32(entryOffset + 4);
-        const valOff = getUint32(entryOffset + 8);
-        gps[tag] = {type,count,valOff};
-      }
-      exif._gps = extractGPSValues(buffer, tiffOffset, gps, little);
-    }
-    return exif;
-  }
 
-  function extractGPSValues(buffer, tiffOffset, gpsTags, little){
-    const view = new DataView(buffer);
-    const readUint32 = (off) => view.getUint32(off, little);
-    const readUint16 = (off) => view.getUint16(off, little);
-    function readRational(off){
-      const num = readUint32(off);
-      const den = readUint32(off+4);
-      return den ? num/den : 0;
+    function toggleLock(pkg, state) {
+        if (state && !lockedApps.includes(pkg)) lockedApps.push(pkg);
+        if (!state) lockedApps = lockedApps.filter(a => a !== pkg);
+        localStorage.setItem('lockedApps', JSON.stringify(lockedApps));
+        logActivity(state ? `Locked \( {pkg}` : `Unlocked \){pkg}`);
     }
-    const gps = {};
-    if (gpsTags[1]) gps.latRef = String.fromCharCode.apply(null, new Uint8Array(buffer, gpsTags[1].valOff, 2)).trim();
-    if (gpsTags[3]) gps.lonRef = String.fromCharCode.apply(null, new Uint8Array(buffer, gpsTags[3].valOff, 2)).trim();
-    if (gpsTags[2]){
-      const off = gpsTags[2].valOff;
-      const deg = readRational(off);
-      const min = readRational(off+8);
-      const sec = readRational(off+16);
-      gps.lat = deg + min/60 + sec/3600;
-      if (gps.latRef === 'S') gps.lat = -gps.lat;
-    }
-    if (gpsTags[4]){
-      const off = gpsTags[4].valOff;
-      const deg = readRational(off);
-      const min = readRational(off+8);
-      const sec = readRational(off+16);
-      gps.lon = deg + min/60 + sec/3600;
-      if (gps.lonRef === 'W') gps.lon = -gps.lon;
-    }
-    if (typeof gps.lat === 'number' && typeof gps.lon === 'number' && !isNaN(gps.lat) && !isNaN(gps.lon)) return {lat: gps.lat, lon: gps.lon};
-    return null;
-  }
 
-  function parseGPS(exif){
-    if (!exif || !exif._gps) return null;
-    return exif._gps;
-  }
-})();
+    function changePin() {
+        const old = prompt("Current PIN:");
+        if (old !== correctPin) return alert("Incorrect");
+        const newPin = prompt("New 4-digit PIN:");
+        if (newPin && newPin.length === 4 && !isNaN(newPin)) {
+            localStorage.setItem('shieldPin', newPin);
+            alert("PIN Updated");
+            logActivity("Master PIN changed");
+        }
+    }
+
+    function factoryReset() {
+        if (confirm("ERASE ALL DATA AND RESET PIN TO 1234?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+
+    // Auto-lock after 3 minutes
+    let timer = setTimeout(() => {
+        if (!document.getElementById('pinScreen').classList.contains('hidden')) return;
+        document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('pinScreen').classList.remove('hidden');
+        document.getElementById('pinInput').value = '';
+        logActivity("Auto-locked");
+    }, 180000);
+
+    document.addEventListener('mousemove', () => clearTimeout(timer) || (timer = setTimeout(arguments.callee, 180000)));
+
+    window.onload = () => {
+        if (!localStorage.getItem('shieldPin')) {
+            document.getElementById('pinScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            logActivity("First time launch");
+        }
+        document.getElementById('activityList').innerHTML = '<p style="text-align:center; opacity:0.6;">No activity recorded</p>';
+    };
 </script>
 </body>
 </html>
